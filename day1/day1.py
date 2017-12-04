@@ -1,5 +1,4 @@
 from itertools import cycle
-import os
 
 
 def p1(input):
