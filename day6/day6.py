@@ -9,10 +9,7 @@ def r1(input):
         redist_val = input[to_redist]
         input[to_redist] = 0
         for i in range(redist_val):
-            if to_redist + 1 == input_len:
-                to_redist = 0
-            else:
-                to_redist += 1
+            to_redist = 0 if to_redist + 1 == input_len else to_redist + 1
             input[to_redist] += 1
 
     return counter
@@ -31,10 +28,7 @@ def r2(input):
         redist_val = input[to_redist]
         input[to_redist] = 0
         for i in range(redist_val):
-            if to_redist + 1 == input_len:
-                to_redist = 0
-            else:
-                to_redist += 1
+            to_redist = 0 if to_redist + 1 == input_len else to_redist + 1
             input[to_redist] += 1
 
         seen_before = list(filter(lambda r: len([i for i, j in zip(input, r[0]) if i == j]) == input_len, reached))
