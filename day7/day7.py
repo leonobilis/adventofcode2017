@@ -1,5 +1,6 @@
 import re
 
+
 def p1(inp):
     all_childs = []
     for a in inp.values():
@@ -12,7 +13,7 @@ def p1(inp):
 def p2(inp):
     root = p1(inp)
     weights(root, inp)
-
+    unbalanced = []
     for key, value in inp.items():
         if value[1]:
             child_w = [inp[v][2] for v in value[1]]
@@ -26,7 +27,9 @@ def p2(inp):
             else:
                 continue
             diff_key = list(filter(lambda x: inp[x][2] == diff_val, value[1]))[0]
-            return inp[diff_key][0] - (diff_val - s3.pop())
+            unbalanced.append([inp[diff_key][2], inp[diff_key][0] - (diff_val - s3.pop())])
+    return sorted(unbalanced, key=lambda x: x[0])[0][1]
+
 
 def weights(key, inp):
     if len(inp[key]) == 3:
@@ -38,8 +41,6 @@ def weights(key, inp):
         summ = sum([weights(k, inp) for k in inp[key][1]]) + inp[key][0]
         inp[key].append(summ)
         return summ
-
-
 
 
 def parse_input(inp):
@@ -67,7 +68,7 @@ if __name__ == "__main__":
                         cntj (57)""")
 
     assert(p1(inp) == 'tknk')
-    assert (p2(inp) == 60)
+    assert(p2(inp) == 60)
 
     with open('input.txt', "r") as f:
         inp = parse_input(f.read())
