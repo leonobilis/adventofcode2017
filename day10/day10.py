@@ -24,19 +24,17 @@ def e2(lengths):
     length = len(circural_list)
     p1 = 0
     skip = 0
-    for i in range(64):
-        for l in lengths:
-            p2 = p1 + l if p1 + l < length else p1 + l - length
-            if p2 > p1:
-                circural_list[p1:p2] = reversed(circural_list[p1:p2])
-            elif l:
-                sublist = list(reversed(circural_list[p1:] + circural_list[:p2]))
-                circural_list[p1:] = sublist[:length-p1]
-                circural_list[:p2] = sublist[length-p1:]
-            p1 = p1 + l if p1 + l < length else p1 + l - length
-            p1 = p1 + skip if p1 + skip < length else p1 + skip - length
-            skip += 1
-            if skip >= length: skip -= length
+    for l in 64 * lengths:
+        p2 = p1 + l if p1 + l < length else p1 + l - length
+        if p2 > p1:
+            circural_list[p1:p2] = reversed(circural_list[p1:p2])
+        elif l:
+            sublist = list(reversed(circural_list[p1:] + circural_list[:p2]))
+            circural_list[p1:] = sublist[:length-p1]
+            circural_list[:p2] = sublist[length-p1:]
+        p1 = p1 + l if p1 + l < length else p1 + l - length
+        p1 = p1 + skip if p1 + skip < length else p1 + skip - length
+        skip = 0 if skip == length - 1 else skip + 1
     return reduce(lambda x, y: "{}{}".format(x, y), ['%x' % a if a > 16 else '0'+('%x' % a) for a in [reduce(lambda x, y: x ^ y, i) for i in [circural_list[x:x+16] for x in range(0, 255, 16)]]])
 
 
