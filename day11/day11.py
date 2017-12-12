@@ -46,8 +46,7 @@ def e2(path):
     maxmax = 0
     for p in path:
         steps[p] += 1
-        m = sum(reduce2(reduce1(steps.copy())).values())
-        maxmax = m if m > maxmax else maxmax
+        maxmax = max(maxmax, sum(reduce2(reduce1(steps.copy())).values()))
     return maxmax
 
 
