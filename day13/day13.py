@@ -2,15 +2,12 @@ import re
 
 
 def p1(inp):
-    severity = 0
-    positions = dict([(a, [0, True]) for a in inp.keys()])
-    for ps in range(1, max(inp.keys())+1):
-        for k in inp.keys():
-            if positions[k][0] == inp[k] - 1 or positions[k][0] == 0: positions[k][1] = not positions[k][1]
-            positions[k][0] = positions[k][0] + 1 if not positions[k][1] else positions[k][0] - 1
-        if ps in inp.keys() and positions[ps][0] == 0:
-            severity += ps * inp[ps]
-    return severity
+    catched = []
+    for ps in inp:
+        a = ps % ((inp[ps] - 1) * 2)
+        b = a if inp[ps] > a else (inp[ps] - 1) * 2 - a
+        catched.append(ps) if b == 0 else None
+    return sum([p*inp[p] for p in catched])
 
 
 def p2(inp):
