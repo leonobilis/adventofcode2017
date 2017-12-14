@@ -26,18 +26,14 @@ def p1(inp):
 
 
 def p2(inp):
-    grid = [[int(a) for a in hash("{}-{}".format(inp, i))] for i in range(128)]
-    processed = set()
-    return sum([proc(grid, i, j, processed) for j in range(128) for i in range(128)])
+    grid = [[int(a) for a in hash("{}-{}".format(inp, k))] for k in range(128)]
+    return sum([proc(grid, i, j) for j in range(128) for i in range(128)])
 
 
-def proc(grid, i, j, processed):
-    if (i, j) not in processed and grid[i][j]:
-        processed.add((i, j))
-        proc(grid, i+1, j, processed) if i+1 < 128 else None
-        proc(grid, i-1, j, processed) if i-1 >= 0 else None
-        proc(grid, i, j+1, processed) if j+1 < 128 else None
-        proc(grid, i, j-1, processed) if j-1 >= 0 else None
+def proc(grid, i, j):
+    if grid[i][j]:
+        grid[i][j] = 0
+        [proc(grid, i+ii, j+jj) for ii, jj in [(0, 1), (1, 0), (0, -1), (-1, 0)] if 0 <= i+ii < 128 and 0 <= j+jj < 128]
         return 1
     else:
         return 0
