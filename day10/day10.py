@@ -34,7 +34,7 @@ def e2(lengths):
             circural_list[:p2] = sublist[length-p1:]
         p1 = (p1 + l + skip) % length
         skip += 1
-    return reduce(lambda x, y: "{}{}".format(x, y), ['%x' % a if a > 16 else '0'+('%x' % a) for a in [reduce(lambda x, y: x ^ y, i) for i in [circural_list[x:x+16] for x in range(0, 255, 16)]]])
+    return reduce(lambda x, y: "{}{}".format(x, y), ["{:02x}".format(a) for a in [reduce(lambda x, y: x ^ y, i) for i in [circural_list[x:x+16] for x in range(0, 255, 16)]]])
 
 
 if __name__ == "__main__":
