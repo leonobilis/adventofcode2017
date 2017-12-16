@@ -1,8 +1,5 @@
 def spin(inlist, x):
-    x = int(x)
-    outlist = inlist[-x:]
-    outlist.extend(inlist[:-x])
-    return outlist
+    return inlist[-int(x):] + inlist[:-int(x)]
 
 
 def exchange(inlist, ab):
@@ -22,26 +19,26 @@ def partner(inlist, ab):
     return inlist
 
 
-def p1(programs, inp):
+def dance(programs, inp):
     action = {"s": spin, "x": exchange, "p": partner}
     for i in inp:
         programs = action[i[0]](programs, i[1:])
-    return "".join(programs)
+    return programs
+
+
+def p1(programs, inp):
+    return "".join(dance(programs, inp))
 
 
 def p2(programs, inp, i):
-    action = {"s": spin, "x": exchange, "p": partner}
     programs_cpy = programs.copy()
-    cond = True
-    count = 0
-    while cond:
+    programs = dance(programs, inp)
+    count = 1
+    while programs != programs_cpy:
         count += 1
-        for ii in inp:
-            programs = action[ii[0]](programs, ii[1:])
-        cond = programs != programs_cpy
+        programs = dance(programs, inp)
     for _ in range(i % count):
-        for ii in inp:
-            programs = action[ii[0]](programs, ii[1:])
+        programs = dance(programs, inp)
     return "".join(programs)
 
 
